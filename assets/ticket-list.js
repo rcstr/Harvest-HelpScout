@@ -21,7 +21,6 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
       // fire after table is built
       setTimeout( app.find_tickets_table, 500 );
     });
-
   };
 
   app.find_tickets_table = function() {
@@ -105,8 +104,8 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     var config_script, ph, platform_config, platform_script;
 
     platform_config = {
-      applicationName : "HelpScout",
-      permalink : "https://secure.helpscout.net/conversation/%ITEM_ID%"
+      applicationName : 'HelpScout',
+      permalink : 'https://secure.helpscout.net/conversation/%ITEM_ID%'
     };
 
     config_script = document.createElement( 'script' );
