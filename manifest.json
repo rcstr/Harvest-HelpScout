@@ -10,9 +10,9 @@
         "*://secure.helpscout.net/mailbox/*/*"
       ],
       "js": [
-        "assets/list_view.js",
-        "assets/single_view.js",
-        "assets/main.js"
+        "assets/single-ticket.js",
+        "assets/ticket-list.js",
+        "assets/script.js"
       ],
       "run_at": "document_start"
     }
