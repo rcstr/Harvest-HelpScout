@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "HelpScout -> Harvest Integration",
+  "description": "Injects HV button into HS tickets",
+  "version": "1.0",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://secure.helpscout.net/conversation/*/*"
+      ],
+      "js": [
+        "assets/list_view.js",
+        "assets/single_view.js",
+        "assets/main.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "*://secure.helpscout.net/conversation/*/*",
+    "*://secure.helpscout.net/mailbox/*/*",
+  ]
+}
