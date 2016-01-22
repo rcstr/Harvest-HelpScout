@@ -60,8 +60,8 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
   };
 
   app.trigger_harvest_styling = function() {
-    var evt = new CustomEvent("harvest-event:timers:chrome:add");
-    return document.querySelector("#harvest-messaging").dispatchEvent(evt);
+    var evt = new CustomEvent( 'harvest-event:timers:chrome:add' );
+    return document.querySelector( '#harvest-messaging' ).dispatchEvent( evt );
   };
 
   app.add_timers = function() {
@@ -102,25 +102,25 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
   };
 
   app.add_harvest_js = function() {
-    var configScript, ph, platformConfig, platformScript;
+    var config_script, ph, platform_config, platform_script;
 
-    platformConfig = {
+    platform_config = {
       applicationName : "HelpScout",
       permalink : "https://secure.helpscout.net/conversation/%ITEM_ID%"
     };
 
-    configScript = document.createElement( 'script' );
-    configScript.innerHTML = 'window._harvestPlatformConfig = ' + ( JSON.stringify( platformConfig ) ) + ';';
-    platformScript = document.createElement( 'script');
-    platformScript.src = 'https://platform.harvestapp.com/assets/platform.js';
-    platformScript.async = true;
+    config_script = document.createElement( 'script' );
+    config_script.innerHTML = 'window._harvestPlatformConfig = ' + ( JSON.stringify( platform_config ) ) + ';';
+    platform_script = document.createElement( 'script');
+    platform_script.src = 'https://platform.harvestapp.com/assets/platform.js';
+    platform_script.async = true;
     ph = document.getElementsByTagName( 'script' )[0];
-    ph.parentNode.insertBefore( configScript, ph );
-    ph.parentNode.insertBefore( platformScript, ph );
+    ph.parentNode.insertBefore( config_script, ph );
+    ph.parentNode.insertBefore( platform_script, ph );
     
     return document.body.addEventListener( 'harvest-event:ready', (function( _this ) {
       return function() {
-        app.platformLoaded = true;
+        app.platform_loaded = true;
         return app.add_timers();
       };
     })( this ));
