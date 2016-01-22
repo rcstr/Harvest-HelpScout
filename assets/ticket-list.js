@@ -42,15 +42,13 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
       var name = app.elems.tickets[i].querySelector( 'td.subj p' );
 
       var data = {
-        'account' : {
-          'id' : 1756504
-        },
+        'account' : {},
         'group' : {
-          'id' : 7988826,
-          'name' : 'HelpScout Task'
+          'id' : 'hs',
+          'name' : 'Support: Maintainn'
         },
         'item' : {
-          'id' : 3580708,
+          'id' : 'hs_' + id,
           'name' : id.innerText + ' - ' + name.innerText
         },
       };
