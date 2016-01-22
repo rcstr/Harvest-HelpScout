@@ -6,7 +6,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://secure.helpscout.net/conversation/*/*"
+        "*://secure.helpscout.net/conversation/*/*",
+        "*://secure.helpscout.net/mailbox/*/*"
       ],
       "js": [
         "assets/list_view.js",
@@ -19,6 +20,6 @@
   "permissions": [
     "tabs",
     "*://secure.helpscout.net/conversation/*/*",
-    "*://secure.helpscout.net/mailbox/*/*",
+    "*://secure.helpscout.net/mailbox/*/*"
   ]
 }
