@@ -1,20 +1,22 @@
-(function harvest_helpscout(window, document) {
+window.WDS_HelpScout_Harvest_Integration_Single_Ticket = window.WDS_HelpScout_Harvest_Integration_Single_Ticket || {};
+
+(function (window, document, app, undefined) {
     'use strict';
 
     var c = {}; // cache
 
-    function cache() {
+    app.cache = function() {
         c.ticketHeader = document.querySelector('#tkHeader');
         c.ticketSubject = document.querySelector("#tktSubject");
         c.ticketSubjectLabel = document.querySelector("#subject");
         c.ticketSubjectLabelText = document.querySelector("#subjectLine");
-    }
+    };
 
-    function meetRequirements() {
+    app.meetRequirements = function() {
         return (c.ticketSubject !== null);
-    }
+    };
 
-    function getTicketInfo() {
+    app.getTicketInfo = function() {
         var ticketInfo = {
                 "id": 0,
                 "name": ""
@@ -27,9 +29,9 @@
         ticketInfo.name = id + ' ' + name;
 
         return ticketInfo;
-    }
+    };
 
-    function injectHVButton(ticketInfo) {
+    app.injectHVButton = function(ticketInfo) {
         var timerEl = document.createElement('div');
 
         timerEl.classList.add('harvest-timer');
@@ -37,42 +39,24 @@
         timerEl.dataset.group = JSON.stringify({"id": "hs", "name": "Support: Maintainn"});
 
         c.ticketSubjectLabel.insertBefore(timerEl, c.ticketSubjectLabelText);
-    }
+    };
 
+    app.trigger_harvest_styling = function() {
+        var evt = new CustomEvent( 'harvest-event:timers:chrome:add' );
+        return document.querySelector( '#harvest-messaging' ).dispatchEvent( evt );
+    };
 
-    function injectHVScript() {
-        // first script and config
-        var ph = document.getElementsByTagName("script")[0];
-        var _harvestPlatformConfig = {
-            "applicationName": "HelpScout",
-            "permalink": "https://example.com/item/%ITEM_ID%"
-        };
+    app.init = function() {
+        app.cache();
 
-        // config script
-        var configScript = document.createElement("script");
-        configScript.innerHTML = "window._harvestPlatformConfig = " + (JSON.stringify(_harvestPlatformConfig)) + ";";
-        ph.parentNode.insertBefore(configScript, ph);
-
-        // hv script
-        var s = document.createElement("script");
-        s.src = "https://platform.harvestapp.com/assets/platform.js";
-        s.async = true;
-
-        ph.parentNode.insertBefore(s, ph);
-    }
-
-    function init() {
-        cache();
-
-        if (meetRequirements()) { // if DOM is present
-            injectHVButton(getTicketInfo());
-            injectHVScript();
+        if (app.meetRequirements()) { // if DOM is present
+            app.injectHVButton(app.getTicketInfo());
+            app.trigger_harvest_styling();
         } else { // DOM is not rendered, let's give another shot
-            window.requestAnimationFrame(init);
+            window.requestAnimationFrame(app.init);
         }
-    }
+    };
 
-    // init application on DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', init);
+    return app;
 
-})(window, document);
+})( window, document, window.WDS_HelpScout_Harvest_Integration_Single_Ticket );

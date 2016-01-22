@@ -10,7 +10,8 @@
       ],
       "js": [
         "assets/single-ticket.js",
-        "assets/ticket-list.js"
+        "assets/ticket-list.js",
+        "assets/script.js"
       ],
       "run_at": "document_start"
     }

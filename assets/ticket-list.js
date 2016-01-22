@@ -1,11 +1,8 @@
-window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integration || {};
+window.WDS_HelpScout_Harvest_Integration_Ticket_List = window.WDS_HelpScout_Harvest_Integration_Ticket_List || {};
 
 (function (window, document, app, undefined) {
   app.cache = function() {
     app.elems = {};
-    
-    app.incognito = false;
-    app.url = false;
 
     app.elems.js_wrap = document.getElementById( 'js-wrap' );
   };
@@ -14,7 +11,12 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     app.cache();
 
     // add harvest js
-    app.add_harvest_js();
+    document.body.addEventListener( 'harvest-event:ready', (function( _this ) {
+      return function() {
+        app.platform_loaded = true;
+        return app.add_timers();
+      };
+    })( this ));
 
     document.body.addEventListener( 'harvest-event:ready', function () {
       console.log( 'harvest is ready' );
@@ -100,33 +102,6 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     return anchor_node.parentNode.insertBefore( timer, anchor_node );
   };
 
-  app.add_harvest_js = function() {
-    var config_script, ph, platform_config, platform_script;
-
-    platform_config = {
-      applicationName : 'HelpScout',
-      permalink : 'https://secure.helpscout.net/conversation/%ITEM_ID%'
-    };
-
-    config_script = document.createElement( 'script' );
-    config_script.innerHTML = 'window._harvestPlatformConfig = ' + ( JSON.stringify( platform_config ) ) + ';';
-    platform_script = document.createElement( 'script');
-    platform_script.src = 'https://platform.harvestapp.com/assets/platform.js';
-    platform_script.async = true;
-    ph = document.getElementsByTagName( 'script' )[0];
-    ph.parentNode.insertBefore( config_script, ph );
-    ph.parentNode.insertBefore( platform_script, ph );
-    
-    return document.body.addEventListener( 'harvest-event:ready', (function( _this ) {
-      return function() {
-        app.platform_loaded = true;
-        return app.add_timers();
-      };
-    })( this ));
-  };
-
-  document.addEventListener( 'DOMContentLoaded', app.init );
-
   return app;
 
-})( window, document, window.WDS_HelpScout_Harvest_Integration );
+})( window, document, window.WDS_HelpScout_Harvest_Integration_Ticket_List );
