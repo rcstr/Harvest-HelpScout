@@ -56,6 +56,26 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
         });
     };
 
+    module.insertHVScript = function insertHVScript() {
+        // first script and config
+        var ph = document.getElementsByTagName("script")[0];
+        var _harvestPlatformConfig = {
+            "applicationName": "HelpScout",
+            "permalink": "https://example.com/item/%ITEM_ID%"
+        };
+
+        // config script
+        var configScript = document.createElement("script");
+        configScript.innerHTML = "window._harvestPlatformConfig = " + (JSON.stringify(_harvestPlatformConfig)) + ";";
+        ph.parentNode.insertBefore(configScript, ph);
+
+        // hv script
+        var s = document.createElement("script");
+        s.src = "https://platform.harvestapp.com/assets/platform.js";
+        s.async = true;
+
+        ph.parentNode.insertBefore(s, ph);
+    };
     /**
      * Init application
      */
