@@ -51,8 +51,13 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     module.initSubmodule = function initSubmodule() {
         subModuleInstance = app[subModule];
 
-        return new Promise(subModuleInstance.init).then(function() {
-            alert('passed');
+        return new Promise(subModuleInstance.init).then(function submoduleResolvedInit() {
+            var tickets = subModuleInstance.getTickets();
+
+            module.insertHVTimer(tickets);
+            module.insertHVScript();
+        });
+    };
 
     module.insertHVTimer = function insertHVTimer(tickets) {
         tickets.forEach(function insertHVButton(ticket) {
