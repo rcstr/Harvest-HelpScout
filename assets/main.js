@@ -56,6 +56,19 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
         });
     };
 
+    module.buildTimerEl = function buildTimerEl(ticket) {
+        var timer = document.createElement('div');
+
+        timer.classList.add('harvest-timer');
+        timer.dataset.item = JSON.stringify({
+            "id": "hs_" + ticket.ticketId,
+            "name": ticket.ticketId + " " + ticket.ticketSubject
+        });
+        timer.dataset.group = JSON.stringify({"id": "hs", "name": "Support: Maintainn"});
+
+        return timer;
+    };
+
     module.insertHVScript = function insertHVScript() {
         // first script and config
         var ph = document.getElementsByTagName("script")[0];
@@ -76,6 +89,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
 
         ph.parentNode.insertBefore(s, ph);
     };
+
     /**
      * Init application
      */
