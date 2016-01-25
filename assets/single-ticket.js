@@ -12,6 +12,20 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
         return true;
     };
 
+    module.getTickets = function getTickets() {
+        var ticketID = parseInt(app.c.ticket.querySelector('#tkHeader p strong').innerText),
+            ticketSubject = app.c.ticket.querySelector('#subjectLine').innerText,
+
+            parentNode = app.c.ticket.querySelector('#subject');
+
+        return [{
+            "nodeParent": parentNode,
+            "nodeBefore": parentNode.querySelector("#subjectLine"),
+            "ticketId": ticketID,
+            "ticketSubject": ticketSubject
+        }];
+    };
+
     module.init = function init(resolve, reject) {
         module.cache();
 
