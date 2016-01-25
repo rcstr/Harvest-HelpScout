@@ -53,6 +53,12 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
 
         return new Promise(subModuleInstance.init).then(function() {
             alert('passed');
+
+    module.insertHVTimer = function insertHVTimer(tickets) {
+        tickets.forEach(function insertHVButton(ticket) {
+            var timerEl = module.buildTimerEl(ticket);
+
+            ticket.nodeParent.insertBefore(timerEl, ticket.nodeBefore);
         });
     };
 
