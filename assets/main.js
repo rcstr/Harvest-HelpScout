@@ -85,7 +85,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
         var ph = document.getElementsByTagName("script")[0];
         var _harvestPlatformConfig = {
             "applicationName": "HelpScout",
-            "permalink": "https://example.com/item/%ITEM_ID%"
+            "permalink": "https://secure.helpscout.net/conversation/%ITEM_ID%"
         };
 
         // config script
