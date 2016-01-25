@@ -6,6 +6,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     var module = app.list = {};
 
     module.cache = function cache() {
+        app.c.folder = app.c.wrapper.querySelector('#folder');
     };
 
     module.meetRequirements = function meetRequirements() {

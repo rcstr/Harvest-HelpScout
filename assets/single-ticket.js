@@ -6,6 +6,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     var module = app.single = {};
 
     module.cache = function cache() {
+        app.c.ticket = app.c.wrapper.querySelector('#ticket');
     };
 
     module.meetRequirements = function meetRequirements() {
