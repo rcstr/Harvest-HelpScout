@@ -10,6 +10,10 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     };
 
     module.meetRequirements = function meetRequirements() {
+        if (app.c.folder === null) {
+            return false;
+        }
+
         return true;
     };
 
