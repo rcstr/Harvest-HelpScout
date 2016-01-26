@@ -26,12 +26,15 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
                 ticketSubject = ticketEl.querySelector('td.subj p').innerText,
                 parentNode = ticketEl.querySelector('a');
 
-            tickets.push({
-                "nodeParent": parentNode.parentNode,
-                "nodeBefore": parentNode,
-                "ticketId": ticketID,
-                "ticketSubject": ticketSubject
-            });
+            // only add if doesn't already exist
+            if ( ! ticketEl.querySelector( '.harvest-timer' ) ) {
+                tickets.push({
+                    "nodeParent": parentNode.parentNode,
+                    "nodeBefore": parentNode,
+                    "ticketId": ticketID,
+                    "ticketSubject": ticketSubject
+                });
+            }
         });
 
         return tickets;
@@ -42,6 +45,8 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
 
         if (module.meetRequirements()) {
             resolve();
+
+            app.bindEvents();
         } else {
             window.requestAnimationFrame(function callInit() {
                 module.init(resolve, reject);

@@ -36,6 +36,8 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
 
         if (module.meetRequirements()) {
             resolve();
+
+            app.bindEvents();
         } else {
             window.requestAnimationFrame(function callInit() {
                 module.init(resolve, reject);

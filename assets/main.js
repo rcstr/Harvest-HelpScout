@@ -10,7 +10,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     /**
      * main cache
      */
-    module.cache = function cache() {
+    module.cache = function() {
         app.c = {};
         app.c.wrapper = document.querySelector('#js-wrap');
         app.c.ticketWrapper = app.c.wrapper.querySelector('#ticket');
@@ -22,7 +22,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
      *
      * @returns {boolean}app.c.listWrapper
      */
-    module.meetRequirements = function meetRequirements() {
+    module.meetRequirements = function() {
         if (app.c.wrapper === null) {
             return false;
         }
@@ -48,7 +48,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     /**
      * init submodule
      */
-    module.initSubmodule = function initSubmodule() {
+    module.initSubmodule = function() {
         subModuleInstance = app[subModule];
 
         return new Promise(subModuleInstance.init).then(function submoduleResolvedInit() {
@@ -59,7 +59,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
         });
     };
 
-    module.insertHVTimer = function insertHVTimer(tickets) {
+    module.insertHVTimer = function(tickets) {
         tickets.forEach(function insertHVButton(ticket) {
             var timerEl = module.buildTimerEl(ticket);
 
@@ -67,7 +67,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
         });
     };
 
-    module.buildTimerEl = function buildTimerEl(ticket) {
+    module.buildTimerEl = function(ticket) {
         var timer = document.createElement('div');
 
         timer.classList.add('harvest-timer');
@@ -80,7 +80,7 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
         return timer;
     };
 
-    module.insertHVScript = function insertHVScript() {
+    module.insertHVScript = function() {
         // first script and config
         var ph = document.getElementsByTagName("script")[0];
         var _harvestPlatformConfig = {
@@ -104,16 +104,42 @@ window.WDS_HelpScout_Harvest_Integration = window.WDS_HelpScout_Harvest_Integrat
     /**
      * Init application
      */
-    module.init = function init() {
+    module.init = function() {
         module.cache();
 
         if (module.meetRequirements()) {
             module.setSubmodule();
             module.initSubmodule();
+
+            module.bindEvents();
         } else {
             window.requestAnimationFrame(module.init);
         }
     };
 
+    module.bindEvents = function() {
+        //menu items
+        var menuItems = document.querySelectorAll( '#folders li' );
+            
+        [].forEach.call(menuItems, function eachTicket(menuItem) {
+            // rerun when tab is clicked
+            menuItem.addEventListener('click', module.delayedInit );
+        });
+
+        // ticket list
+        var ticketList = document.querySelectorAll('#tblTickets tbody tr');
+
+        [].forEach.call(ticketList, function eachTicket(ticketEl) {
+            ticketEl.addEventListener('click', module.delayedInit );
+        });
+    }
+
+    module.delayedInit = function() {
+        setTimeout( module.init, 1600 );
+
+        module.bindEvents();
+    }
+
     document.addEventListener('DOMContentLoaded', module.init);
+
 }(window, document, window.WDS_HelpScout_Harvest_Integration));
